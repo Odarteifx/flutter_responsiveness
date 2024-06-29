@@ -1,4 +1,4 @@
-import 'modals.dart';
+import 'models.dart';
 
 final User user_0 = User(
   name: Name(
@@ -53,3 +53,13 @@ final User user_0 = User(
     avatarUrl: 'assets/avatar_6.jpg', 
     lastActive: DateTime.now().subtract(const Duration(hours: 2, minutes: 30))
     );
+
+    List <Email> emails= [
+      Email(
+        sender: user_1, 
+        recipients: [user_0, user_2], 
+        subject: 'Day trip to Aqua Safari',
+        content: 'This contains the total budget of the day trip to Aqua Safari'
+        
+        )
+    ];
