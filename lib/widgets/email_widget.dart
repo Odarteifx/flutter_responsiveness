@@ -83,7 +83,7 @@ class _EmailContentState extends State<EmailContent> {
 
   Widget get contentSpacer => SizedBox(height: widget.isThreaded ? 20 : 2);
 
-  String get lastActive {
+  String get lastActiveLabel {
     final DateTime now = DateTime.now();
     if (widget.email.sender.lastActive.isAfter(now)) throw ArgumentError();
     final Duration elapsedTime =
@@ -122,11 +122,80 @@ class _EmailContentState extends State<EmailContent> {
                       backgroundImage:
                           AssetImage(widget.email.sender.avatarUrl),
                     ),
-                    const Padding(padding: EdgeInsets.symmetric(horizontal: 6.0))
+                    const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 6.0))
+                  ],
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.email.sender.name.fullName,
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                          style: widget.isSelected
+                              ? _textTheme.labelMedium?.copyWith(
+                                  color: _colorScheme.onSecondaryContainer)
+                              : _textTheme.labelMedium
+                                  ?.copyWith(color: _colorScheme.onSurface)),
+                      Text(
+                        lastActiveLabel,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        style: widget.isSelected
+                            ? _textTheme.labelMedium?.copyWith(
+                                color: _colorScheme.onSecondaryContainer)
+                            : _textTheme.labelMedium?.copyWith(
+                                color: _colorScheme.onSurfaceVariant),
+                      )
+                    ],
+                  )),
+                  if (constraints.maxWidth - 200 > 0) ...[
+                    // starbutton(),
                   ]
                 ],
               );
             },
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.isPreview) ...[
+                Text(
+                  widget.email.subject,
+                  style: const TextStyle(fontSize: 18)
+                      .copyWith(color: _colorScheme.onSurface),
+                ),
+              ],
+              if (widget.isThreaded) ...[
+                contentSpacer,
+                Text(
+                  'To ${widget.email.recipients.map((recipient) => recipient.name.firstname).join(",")}',
+                  style: _textTheme.bodyMedium,
+                )
+              ],
+              contentSpacer,
+              Text(
+                widget.email.content,
+                maxLines: widget.isPreview ? 2 : 100,
+                overflow: TextOverflow.ellipsis,
+                style: contentTextStyle,
+              )
+            ],
+          ),
+          const SizedBox(width: 12,),
+          widget.email.attachments.isEmpty
+          ? Container(
+            height: 96,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: AssetImage(widget.email.attachments.first.url),
+                fit: BoxFit.cover
+                )
+              ),
           )
         ],
       ),
