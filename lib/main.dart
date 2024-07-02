@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_responsiveness/models/data.dart' as data;
+import 'package:flutter_responsiveness/models/models.dart';
+import 'package:flutter_responsiveness/widgets/email_list_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,31 +20,31 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      home:  Feed(currentUser: data.user_0,),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class Feed extends StatefulWidget {
+  const Feed({super.key, required this.currentUser});
 
+final User currentUser;
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Feed> createState() => _FeedState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FeedState extends State<Feed> {
+  late final _colorScheme = Theme.of(context).colorScheme;
+  late final _backgroundColor = Color.alphaBlend(
+      _colorScheme.primary.withOpacity(0.14), _colorScheme.surface);
   @override
   Widget build(BuildContext context) {
-   
-    return   Scaffold(
-      appBar: AppBar(title: const Text('data'),),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            Text('data')
-          ],
-        ),
+    return Scaffold(
+      body: Container(
+        color: _backgroundColor,
+        child: EmailListView(currentUser: widget.currentUser),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){}),
     );
   }
 }

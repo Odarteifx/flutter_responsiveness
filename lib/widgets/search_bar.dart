@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 
-class SearchBar extends StatefulWidget {
+class SearchBar extends StatelessWidget {
   const SearchBar({super.key, required this.currentUser});
 
   final User currentUser;
-  @override
-  State<SearchBar> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -31,8 +26,13 @@ class _SearchBarState extends State<SearchBar> {
             decoration: InputDecoration(
               isDense: true,
               border: InputBorder.none,
+              hintText: 'Search Replies',
+              hintStyle: Theme.of(context).textTheme.bodyMedium,
             ),
-           ))
+           )),
+           CircleAvatar(
+            backgroundImage: AssetImage(currentUser.avatarUrl)
+           )
           ],
         ),
       ),
