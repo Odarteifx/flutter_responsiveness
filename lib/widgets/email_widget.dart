@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../models/models.dart';
 
@@ -185,19 +186,70 @@ class _EmailContentState extends State<EmailContent> {
               )
             ],
           ),
-          const SizedBox(width: 12,),
+          const SizedBox(
+            width: 12,
+          ),
           widget.email.attachments.isEmpty
-          ? Container(
-            height: 96,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: AssetImage(widget.email.attachments.first.url),
-                fit: BoxFit.cover
+              ? Container(
+                  height: 96,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                          image: AssetImage(widget.email.attachments.first.url),
+                          fit: BoxFit.cover)),
                 )
-              ),
-          )
+              : const SizedBox.shrink(),
+          if (widget.isPreview) ...[
+            //const EmailReplyOptions(),
+          ]
         ],
+      ),
+    );
+  }
+}
+
+class EmailHeadline extends StatefulWidget {
+  const EmailHeadline(
+      {super.key, required this.email, required this.isSelected});
+
+  final Email email;
+  final bool isSelected;
+  @override
+  State<EmailHeadline> createState() => _EmailHeadlineState();
+}
+
+class _EmailHeadlineState extends State<EmailHeadline> {
+  late final TextTheme _textTheme = Theme.of(context).textTheme;
+  late final ColorScheme _colorScheme = Theme.of(context).colorScheme;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 84,
+      color: Color.alphaBlend(
+        _colorScheme.primary.withOpacity(0.05),
+        _colorScheme.surface,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 21, 21, 21),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.email.subject,
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                  style: _textTheme.labelMedium.copyWith(fontWeight: FontWeight.w500),
+                )
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }
