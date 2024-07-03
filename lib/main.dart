@@ -44,7 +44,12 @@ class _FeedState extends State<Feed> {
         color: _backgroundColor,
         child: EmailListView(currentUser: widget.currentUser),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){}),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: _colorScheme.tertiaryContainer,
+        foregroundColor: _colorScheme.onTertiaryContainer,
+        onPressed: (){},
+        child: const Icon(Icons.add),
+        ),
     );
   }
 }

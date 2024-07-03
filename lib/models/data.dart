@@ -16,7 +16,7 @@ final User user_1 = User(
 
 final User user_2 = User(
     name: Name(firstname: 'Jeff', lastname: 'O.'),
-    avatarUrl: 'assets/avatar_2.jpg',
+    avatarUrl: 'assets/avatar_6.jpg',
     lastActive: DateTime.now().subtract(const Duration(minutes: 30)));
 
 final User user_3 = User(
