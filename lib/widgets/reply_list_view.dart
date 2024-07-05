@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/data.dart' as data;
 import 'email_widget.dart';
 
